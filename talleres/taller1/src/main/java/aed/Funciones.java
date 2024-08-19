@@ -82,20 +82,17 @@ class Funciones {
 
     boolean esPrefijo(String s1, String s2) {
         if (s1.length() > s2.length()) return false;
-
-        char arr1[s1.length];
-        
         for (int i = 0; i < s1.length(); i++){
-            arr1[i] = s1[i];
+            if (s1.charAt(i) != s2.charAt(i)) return false;
         }
-        for (int i = 0; i < s1.length(); i++){
-            if (s1[i] != s2[i]) return false;
-        }
-        return false;
+        return true;
     }
 
     boolean esSufijo(String s1, String s2) {
-        // COMPLETAR
-        return false;
+        if (s1.length() > s2.length()) return false;
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) != s2.charAt(s2.length() - s1.length() + i)) return false;
+        }
+        return true;
     }
 }
