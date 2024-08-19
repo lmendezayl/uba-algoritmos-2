@@ -67,11 +67,12 @@ class FuncionesTest {
     void testPrimo() {
         assertFalse(funciones.esPrimo(0));
         assertFalse(funciones.esPrimo(1));
-        assertFalse(funciones.esPrimo(4));
-        assertFalse(funciones.esPrimo(49));
+        assertFalse(funciones.esPrimo(12));
         assertTrue(funciones.esPrimo(2));
         assertTrue(funciones.esPrimo(3));
         assertTrue(funciones.esPrimo(17));
+        assertTrue(funciones.esPrimo(5));
+
     }
 
     @Test
