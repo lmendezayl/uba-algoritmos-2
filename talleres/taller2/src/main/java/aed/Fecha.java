@@ -1,14 +1,17 @@
 package aed;
 
 public class Fecha {
-    int dia;
-    int mes;
 
+    private int dia;
+    private int mes;
+
+    // constructor con parametros de ingreso dia y mes
     public Fecha(int dia, int mes) {
-         this.dia = dia;
-         this.mes = mes;
+        this.dia = dia;
+        this.mes = mes;
     }
 
+    // constructor con parametro de ingreso Fecha
     public Fecha(Fecha fecha) {
         this.dia = fecha.dia;
         this.mes = fecha.mes;
@@ -22,21 +25,40 @@ public class Fecha {
         return this.mes;
     }
 
+    @Override
     public String toString() {
-        String re ;
-        return res;
 
-        // "%d / %d", this.dia, this.mes
+        // usamos metodo toString() de la clase Integer
+        // good practice
+        //
+        // update: no creo que este bien usar el metodo toString()
+        // porque le quita la gracia al ej, pero bueno
+        return Integer.toString(dia) + "/" + Integer.toString(mes);
     }
 
     @Override
     public boolean equals(Object otra) {
-        // Implementar
-        return true;
+        // si Object otra es una Fecha fecha
+        // retorna True
+        // sino retorna False
+        if (this == otra)
+            return true;
+        if (otra == null || getClass() != otra.getClass())
+            return false;
+        return false;
+
     }
 
     public void incrementarDia() {
-        // Implementar
+        // si dia es igual la cantidad de dias en el mes
+        // dia = 1; mes++
+        // sino, dia++
+        if (dia == diasEnMes(mes)) {
+            dia = 1;
+            if (mes++ == 12) mes = 1;
+        } else {
+            dia++;
+        }
     }
 
     private int diasEnMes(int mes) {

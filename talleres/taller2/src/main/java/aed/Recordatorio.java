@@ -2,28 +2,30 @@ package aed;
 
 public class Recordatorio {
 
+    private String mensaje;
+    private Fecha fecha;
+    private Horario horario;
+
     public Recordatorio(String mensaje, Fecha fecha, Horario horario) {
-        // Implementar
+        this.mensaje = mensaje;
+        this.fecha = fecha;
+        this.horario = horario;
     }
 
     public Horario horario() {
-        // Implementar
-        return null;
+        return horario;
     }
 
     public Fecha fecha() {
-        // Implementar
-        return null;
+        return fecha;
     }
 
     public String mensaje() {
-        // Implementar
-        return "";
+        return mensaje;
     }
 
     @Override
     public String toString() {
-        // Implementar
         return "";
     }
 

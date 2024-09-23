@@ -33,6 +33,7 @@ public class AgendaTests {
         String fstring = "6/10";
 
         assertEquals(f, f2);
+        // esta haciendo f.equals(f2) con el equals de mi codigo
         assertNotEquals(f, f3);
         assertNotEquals(f, f4);
         assertNotEquals(fstring, f);
