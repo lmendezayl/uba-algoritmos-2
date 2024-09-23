@@ -20,13 +20,18 @@ public class Horario {
 
     @Override
     public String toString() {
-        return Integer.toString(hora) + ":" + Integer.toString(minutos);
+        return "" + hora + ":" + minutos;
     }
 
     @Override
     public boolean equals(Object otro) {
-        // Implementar
-        return true;
+        // mismo concepto que en Fecha, verificamos si son de clase distinta o si
+        // es nulo, luego no son iguales, sino verificamos hora y minutos en este caso
+        if (this.getClass() != otro.getClass() || otro == null) {
+            return false;
+        } else {
+            return this.hora == ((Horario) otro).hora && this.minutos == ((Horario) otro).minutos;
+        }
     }
 
 }

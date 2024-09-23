@@ -12,6 +12,10 @@ public class Recordatorio {
         this.horario = horario;
     }
 
+    public Recordatorio (Recordatorio otro) {
+        this.fecha = otro.fecha;
+   }
+
     public Horario horario() {
         return horario;
     }
@@ -26,13 +30,18 @@ public class Recordatorio {
 
     @Override
     public String toString() {
-        return "";
+        return mensaje + " @ " + fecha + " " + horario;
     }
 
     @Override
     public boolean equals(Object otro) {
-        // Implementar
-        return true;
+        if (this.getClass() != otro.getClass() || otro == null) {
+            return false;
+        } else {
+            return  this.mensaje == ((Recordatorio) otro).mensaje &&
+                    this.fecha == ((Recordatorio) otro).fecha &&
+                    this.horario == ((Recordatorio) otro).horario;
+        }
     }
 
 }

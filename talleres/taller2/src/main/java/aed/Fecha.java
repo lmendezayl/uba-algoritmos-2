@@ -33,7 +33,7 @@ public class Fecha {
         //
         // update: no creo que este bien usar el metodo toString()
         // porque le quita la gracia al ej, pero bueno
-        return Integer.toString(dia) + "/" + Integer.toString(mes);
+        return "" + dia + "/" + mes;
     }
 
     @Override
@@ -41,12 +41,12 @@ public class Fecha {
         // si Object otra es una Fecha fecha
         // retorna True
         // sino retorna False
-        if (this == otra)
-            return true;
-        if (otra == null || getClass() != otra.getClass())
+        if (this.getClass() != otra.getClass() || otra == null) {
             return false;
-        return false;
-
+        } else {
+            Fecha otraFecha = (Fecha) otra;
+            return otraFecha.dia == this.dia && otraFecha.mes == this.mes;
+        }
     }
 
     public void incrementarDia() {
