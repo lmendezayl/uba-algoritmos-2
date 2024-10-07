@@ -18,11 +18,11 @@ public class Fecha {
     }
 
     public Integer dia() {
-        return this.dia;
+        return dia;
     }
 
     public Integer mes() {
-        return this.mes;
+        return mes;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Fecha {
         //
         // update: no creo que este bien usar el metodo toString()
         // porque le quita la gracia al ej, pero bueno
-        return "" + dia + "/" + mes;
+        return String.valueOf(dia) + "/" + String.valueOf(mes);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Fecha {
             return false;
         } else {
             Fecha otraFecha = (Fecha) otra;
-            return otraFecha.dia == this.dia && otraFecha.mes == this.mes;
+            return otraFecha.dia == dia && otraFecha.mes == mes;
         }
     }
 
@@ -55,7 +55,8 @@ public class Fecha {
         // sino, dia++
         if (dia == diasEnMes(mes)) {
             dia = 1;
-            if (mes++ == 12) mes = 1;
+            if (mes++ == 12)
+                mes = 1;
         } else {
             dia++;
         }

@@ -8,20 +8,17 @@ public class Recordatorio {
 
     public Recordatorio(String mensaje, Fecha fecha, Horario horario) {
         this.mensaje = mensaje;
-        this.fecha = fecha;
-        this.horario = horario;
+        this.fecha = new Fecha(fecha); // y con esto tambien
+        this.horario = new Horario(horario.hora(), horario.minutos());
     }
-
-    public Recordatorio (Recordatorio otro) {
-        this.fecha = otro.fecha;
-   }
 
     public Horario horario() {
         return horario;
     }
 
     public Fecha fecha() {
-        return fecha;
+        Fecha nueva_fecha = new Fecha(fecha); // con esto nos ahorramos el aliasing
+        return nueva_fecha;
     }
 
     public String mensaje() {
@@ -30,18 +27,20 @@ public class Recordatorio {
 
     @Override
     public String toString() {
-        return mensaje + " @ " + fecha + " " + horario;
+        return this.mensaje + " @ " + this.fecha + " " + this.horario;
     }
 
     @Override
     public boolean equals(Object otro) {
-        if (this.getClass() != otro.getClass() || otro == null) {
+        if (this.getClass() != otro.getClass()) {
             return false;
         } else {
-            return  this.mensaje == ((Recordatorio) otro).mensaje &&
-                    this.fecha == ((Recordatorio) otro).fecha &&
-                    this.horario == ((Recordatorio) otro).horario;
+            Recordatorio otroRecordatorio = (Recordatorio) otro;
+            // no me andaba porque estaba haciendo aliasing y no estaba usando el metodo
+            // equals XD
+            return (otroRecordatorio.mensaje.equals(mensaje) &&
+                    otroRecordatorio.horario.equals(horario) &&
+                    otroRecordatorio.fecha.equals(fecha));
         }
     }
-
 }
