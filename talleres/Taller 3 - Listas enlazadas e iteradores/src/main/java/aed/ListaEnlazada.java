@@ -60,29 +60,43 @@ public class ListaEnlazada<T> implements Secuencia<T> {
 
 
     public void agregarAdelante(T elem) {
+        /*  agrega un nodo al principio  
+         *  ejemplo:
+         * 
+         *  $ listaEnl = 5 -> 6 -> 8
+         *  $ agregarAdelante(4)
+         *  $ listaEnl = 4 -> 5 -> 6 -> 7
+        */
         Nodo nodo = new Nodo(elem);
-
+        
         if(primero == null) {
+            // si la lista esta vacia...
             primero = nodo;
             ultimo = nodo;
         } else {
-            nodo.siguiente = primero;
-            primero.anterior = nodo;
-
-            primero = nodo;
+            nodo.siguiente = primero;   // sino, hace que el primero sea el siguiente
+            primero.anterior = nodo;    // define el puntero 
+            primero = nodo;             // actualiza el primero a ser el nodo ingresado
         }
     }
 
     public void agregarAtras(T elem){
+        /*  agrega un nodo al final de todo 
+         *  ejemplo:
+         * 
+         *  $ listaEnl = 5 -> 6 -> 8
+         *  $ agregarAdelante(4)
+         *  $ listaEnl = 4 -> 5 -> 6 -> 7
+        */
         Nodo nodo = new Nodo(elem);
 
         if(ultimo == null) {
             primero = new Nodo(elem);
             ultimo = primero;
         } else {
-            ultimo.siguiente = nodo;
-            nodo.anterior = ultimo;
-            ultimo = nodo;
+            ultimo.siguiente = nodo;    // El nodo `ultimo` actual apunta hacia el nuevo nodo.
+            nodo.anterior = ultimo;     // El nuevo nodo apunta hacia atrás al antiguo último nodo.
+            ultimo = nodo;              // Actualiza el nodo `ultimo` para que sea el nuevo nodo.
         }
     }
 
@@ -97,6 +111,16 @@ public class ListaEnlazada<T> implements Secuencia<T> {
     }
 
     public Nodo obtenerNodo(int i) {
+        /* Devuelve el valor almacenado en el nodo de la posición `i`.
+        *
+        * Parámetro:
+        * - i: índice del nodo cuyo valor se desea obtener (empezando desde 0).
+        *
+        * Ejemplo:
+        * $ listaEnl = 5 -> 6 -> 8 
+        * $ obtener(1)
+        * $ return 6.
+        */
         Nodo nodo = primero;
 
         for(int j = 0; j < i; j++) { 
@@ -107,20 +131,23 @@ public class ListaEnlazada<T> implements Secuencia<T> {
     }
 
     public void eliminar(int i) {
-        Nodo eliminar = obtenerNodo(i);
-        Nodo anterior =  eliminar.anterior;
+        Nodo eliminar = obtenerNodo(i);                             //definimos el nodo a eliminar
+        Nodo anterior =  eliminar.anterior;     
         Nodo siguiente = eliminar.siguiente;
         
-        if(primero == ultimo) {
-            primero = null;
-            ultimo = null;
-        } else if(eliminar == primero){
-            primero = siguiente;
-            siguiente.anterior = null;
-        } else if(eliminar == ultimo){
+        if(primero == ultimo) {                                     // si la lista tiene un solo elemento
+            primero = null;                                         // primero pasa a ser null
+            ultimo = null;                                          // ultimo pasa a ser null as well
+        } 
+        else if(eliminar == primero){                               // si el que tengo que eliminar es el primero de la lista
+            primero = siguiente;                                    
+            siguiente.anterior = null;                              
+        } 
+        else if(eliminar == ultimo){
             ultimo = anterior;
             anterior.siguiente = null;
-        } else {
+        } 
+        else {
             anterior.siguiente = siguiente;
             siguiente.anterior = anterior;
         }
