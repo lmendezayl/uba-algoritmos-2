@@ -1,0 +1,89 @@
+struct NodeLista<T>{
+    valor: T
+    siguiente: NodeLista<T>
+}
+
+modulo ListaEnlazada<T> implementa Secuencia<T> {
+    var primero: NodeLista<T>
+    var ultimo: NodeLista<T>
+    var longitud: int 
+
+    procedure NUEVA_LISTA_VACIA(): ListaEnlazada<T> {
+        res = new ListaEnlazada<T>
+        res.primero = null
+        res.ultimo = null
+        res.longitud = 0
+        return res
+    }
+
+    procedure AGREGAR_ADELANTE(inout l: ListaEnlazada<T>, in e: T): Bool {
+        node = new NodeLista<T>
+        node.valor = e 
+        node.siguiente = null
+        if (l.longitud == 0) do
+            l.primero = node
+            l.ultimo = node 
+        end else do
+            node.siguiente = l.primero
+            l.primero = node
+        end 
+        l.longitud = l.longitud + 1
+    }
+
+    procedure PERTENECE(in l: ListaEnlazada<T>, in e: T): Bool {
+        res = false
+        actual = l.primero
+        while (actual != null) do
+            if (actual.valor == e) do
+                res = true
+            end if
+            actual = actual.siguiente
+        end  
+        return res
+    }
+
+    procedure AGREGAR_ATRAS(inout l: ListaEnlazada<T>, in e: T): {
+        node = new NodeLista<T>
+        node.valor = e 
+        node.siguiente = null
+        if (l.longitud == 0) do
+            l.primero = node
+            l.ultimo = node 
+        end else do
+            l.ultimo.siguiente = node 
+            l.ultimo = node 
+        end 
+        l.longitud = l.longitud + 1
+    }
+
+    procedure OBTENER(in l: ListaEnlazada<T>, in i: int): T {
+        j = 0
+        actual = l.primero
+        while(j < i) do 
+            actual = actual.siguiente
+            j = j + 1
+        end   
+        res = actual.valor
+        return res
+    }
+
+    procedure ELIMINAR(inout l: ListaEnlazada<T>, in i: int): {
+        while (l.primero != null && l.primero.valor = i) do                 // caso lista vacia o borrar l.primero 
+            l.primero = l.primero.siguiente
+        end
+        actual = l.primero;                                                 
+        while (actual != null && actual.siguiente != null) do               // evito null pointer access
+            if (actual.siguiente.valor = d) do
+                actual.siguiente = actual.siguiente.siguiente;              // elimino el puntero al nodo que quiero fletar
+            end else do 
+                actual = actual.siguiente;
+            end
+        end
+    }
+
+    procedure CONCATENAR(inout l1: ListaEnlazada<T>, in l2: ListaEnlazada<T>): {
+        if (l1.primero != null && l2.primero != null) do
+            l1.ultimo.siguiente = l2.primero
+        end
+    }
+}
