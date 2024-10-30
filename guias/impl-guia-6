@@ -84,6 +84,14 @@ modulo ListaEnlazada<T> implementa Secuencia<T> {
     procedure CONCATENAR(inout l1: ListaEnlazada<T>, in l2: ListaEnlazada<T>): {
         if (l1.primero != null && l2.primero != null) do
             l1.ultimo.siguiente = l2.primero
+            l1.ultimo = l2.ultimo
+        end else if (l1.primero == null && l2.primero != null) do
+            l1.primero = l2.primero
+            l1.ultimo = l2.ultimo
         end
+
+        // si l2 esta vacia no se hace nada
+        // si ambas estan vacias tampoco
     }
 }
+
