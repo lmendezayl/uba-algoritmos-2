@@ -120,6 +120,7 @@ modulo ListaEnlazada<T> implementa Secuencia<T> {
         // si ambas estan vacias tampoco
     }
 }
+
 ///////////////////////////////////////////////////////////
 
 // Ejercicio 2
@@ -242,3 +243,37 @@ modulo ConjuntoArr<T> implementa ConjuntoAcotado<T> {
         return
     }
 }
+
+///////////////////////////////////////////////////////////
+
+// Ejercicio 3 
+
+modulo ConjuntoListaEnlazada<T> implementa Conjunto<T> {
+    var datos: ListaEnlazada<T>
+    var size: int
+
+    /*
+        Escriba el invariante de representacion y la funcion de abstraccion.
+        Escriba los algoritmos para las operaciones conjVacio y pertenece
+        Escriba el algoritmo para la operacion agregar, agregarRapido y sacar
+        Escriba los algoritmos para las operaciones unir e intersecar.
+        Calcule la complejidad de cada una de estas operaciones
+    */
+
+    procedure abstraccion(in c: ConjuntoListaEnlazada<T>, in c': Conjunto<T>): {
+        c.size = c'.elems.tamaño &&
+        (A t: Z)(t \in c'elems -> t \in subseq(c.datos, 0, c.size))
+    }
+
+    procedure conjVacio():ConjuntoListaEnlazada<T> {
+        var res: ConjuntoListaEnlazada<T>
+
+        res.datos := new ListaEnlazada<T>
+        res.size := 0
+        return res
+    }
+
+    procedure pertenece(in c:ConjuntoListaEnlazada<T>, in e: T) {
+        
+    }
+    }
