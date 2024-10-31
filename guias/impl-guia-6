@@ -1,14 +1,30 @@
+
+// Ejercicio 1
+
 struct NodeLista<T>{
     valor: T
     siguiente: NodeLista<T>
 }
 
 modulo ListaEnlazada<T> implementa Secuencia<T> {
+
+    /*  Invariante de representacion:
+    *   Debe cumplirse que:
+    *       si la longitud de la lista es 0, el primero apunta a null y el ultimo apunta a null
+    *       si la longitud es 1, el primero debe ser no null y el ultimo debe ser el primero
+    *       si la longitud es mayor a 1, ambos no deben apuntar a null y el primero y el ultimo son distintos
+    *       no pueden haber ciclos (?)
+    *       la longitud debe ser igual a la cantidad de nodos en la lista a partir del primero
+    *       todos los nodos son alcanzables a partir del primero
+    */
+
     var primero: NodeLista<T>
     var ultimo: NodeLista<T>
     var longitud: int 
 
-    procedure NUEVA_LISTA_VACIA(): ListaEnlazada<T> {
+    procedure nuevaListaVacia(): ListaEnlazada<T> {
+        var res: ListaEnlazada<T>
+
         res = new ListaEnlazada<T>
         res.primero = null
         res.ultimo = null
@@ -16,7 +32,9 @@ modulo ListaEnlazada<T> implementa Secuencia<T> {
         return res
     }
 
-    procedure AGREGAR_ADELANTE(inout l: ListaEnlazada<T>, in e: T): Bool {
+    procedure agregarAdelante(inout l: ListaEnlazada<T>, in e: T): Bool {
+        var node: NodeLista<T>
+
         node = new NodeLista<T>
         node.valor = e 
         node.siguiente = null
@@ -30,7 +48,10 @@ modulo ListaEnlazada<T> implementa Secuencia<T> {
         l.longitud = l.longitud + 1
     }
 
-    procedure PERTENECE(in l: ListaEnlazada<T>, in e: T): Bool {
+    procedure pertenece(in l: ListaEnlazada<T>, in e: T): bool {
+        var res: bool
+        var actual = NodeLista<T>
+
         res = false
         actual = l.primero
         while (actual != null) do
@@ -42,7 +63,9 @@ modulo ListaEnlazada<T> implementa Secuencia<T> {
         return res
     }
 
-    procedure AGREGAR_ATRAS(inout l: ListaEnlazada<T>, in e: T): {
+    procedure agregarAtras(inout l: ListaEnlazada<T>, in e: T): {
+        var node: NodeLista<T>
+
         node = new NodeLista<T>
         node.valor = e 
         node.siguiente = null
@@ -56,18 +79,21 @@ modulo ListaEnlazada<T> implementa Secuencia<T> {
         l.longitud = l.longitud + 1
     }
 
-    procedure OBTENER(in l: ListaEnlazada<T>, in i: int): T {
+    procedure obtener(in l: ListaEnlazada<T>, in i: int): T {
+        var j: int
+        var actual: NodeLista<T>
         j = 0
         actual = l.primero
         while(j < i) do 
             actual = actual.siguiente
             j = j + 1
         end   
-        res = actual.valor
-        return res
+        return actual.valor
     }
 
-    procedure ELIMINAR(inout l: ListaEnlazada<T>, in i: int): {
+    procedure eliminar(inout l: ListaEnlazada<T>, in i: int): {
+        var actual: NodeLista<T>
+
         while (l.primero != null && l.primero.valor = i) do                 // caso lista vacia o borrar l.primero 
             l.primero = l.primero.siguiente
         end
@@ -81,7 +107,7 @@ modulo ListaEnlazada<T> implementa Secuencia<T> {
         end
     }
 
-    procedure CONCATENAR(inout l1: ListaEnlazada<T>, in l2: ListaEnlazada<T>): {
+    procedure concatenar(inout l1: ListaEnlazada<T>, in l2: ListaEnlazada<T>): {
         if (l1.primero != null && l2.primero != null) do
             l1.ultimo.siguiente = l2.primero
             l1.ultimo = l2.ultimo
@@ -94,4 +120,125 @@ modulo ListaEnlazada<T> implementa Secuencia<T> {
         // si ambas estan vacias tampoco
     }
 }
+///////////////////////////////////////////////////////////
 
+// Ejercicio 2
+
+modulo ConjuntoArr<T> implementa ConjuntoAcotado<T> {
+    /*
+        - Escriba el invariante de representacion y la funcion de abstraccion.
+        - Escriba los algoritmos para las operaciones conjVacio y pertenece
+        - Escriba el algoritmo para la operacion agregar
+        - Escriba los algoritmos para las operaciones unir e intersecar.
+        - Escriba el algoritmo para la operacion sacar.
+        - Calcule la complejidad de cada una de estas operaciones
+        - ¿Qué cambios haria en su implementacion si se quiere que la operacion 
+           agregar sea lo mas rapida posible? Y si se quiere acelerar la operacion 
+           buscar? Indique los cambios en la estructura, el invariante de representacion, 
+           la funcion de abstraccion y los algoritmos.
+
+        Invariante de representacion:
+            el tamaño del conjunto array debe ser igual a la cantidad de datos en ConjuntoArray
+            cada array debe ser distinto (estamos en un conjunto)
+            (este lo copie pero no lo entiendo) (A j:Z)(0 <= j < tamaño -->L def(c.datos[j]))
+    
+        Funcion de abstraccion:
+    */
+    procedure abs(in c: ConjuntoArr<T>, in c':ConjuntoAcotado<T>):bool {
+        c.size = |c'.elems| && 
+        c'.capacidad = longitud(c.datos) && 
+        (A t:Z)(t \in c'.elems <-> t \in subseq(c.datos, 0, c.size))
+    }
+
+    var datos: Array<T>     // es el array que contiene a los datos
+    var size: int           // es el tamaño actual del array, no la capacidad              
+    // no entiendo, ¿se supone que estoy implementando un conjunto acotado de arrays, 
+    // o bien un conjunto acotado COMO un array?
+    // update: segun GPT, es la segunda, lo cual es acorde a la implementacion de fhoerth
+    
+    procedure conjVacio(in capacidad: int): ConjuntoArr<T> {
+        // ingreso capacidad porque es acotado 
+        var res: ConjuntoArr<T>
+
+        res.datos := new Array<T>(capacidad)
+        res.size := 0
+        return res
+    }
+
+    procedure pertenece(in c: ConjuntoArr<T>, in t: T): bool {
+        /*
+            Analisis de complejidad
+                Mejor caso: O(1)
+                Peor caso:  O(n) 
+        */
+        var res: bool // se define res? preguntar 
+        var i: int
+
+        i := 0
+        while (i < c.size) do
+            if (c.datos[i] == t) do 
+                return true
+            end
+            i := i + 1
+        end if
+        return false
+    }
+
+    procedure agregar(inout c: ConjuntoArr<T>, in t: T): {
+        // peor caso: O(n)
+        // requiere    {length(c.datos) < c.size}
+
+        if(!pertenece(c, t))do          //O(n)
+            c.datos[c.size] := t
+            c.size := c.size + 1
+        end if
+        return
+    }
+
+    procedure unir(inout c1: ConjuntoArr<T>, in c2: ConjuntoArr<T>): {
+        // peor caso: O(n^2)
+        var i: int 
+
+        i := 0
+        while(i < c2.size) do           // O(m)
+            agregar(c1, c2.datos[i])    // O(n)
+            i := i + 1
+        end while
+        return 
+    }
+
+    procedure intersecar(inout c1: ConjuntoArr<T>, in c2: ConjuntoArr<T>): {
+        // peor caso: O(n^2)
+        var i: int 
+
+        i := 0 
+        while (i < c1.size) do                          // O(n)
+            if(!pertenece(c2, c1.datos[i])) do          // O(m)
+                sacarPorIndice(c1, i)                   // O(1)
+            end if 
+            i := i + 1
+        end while 
+        return
+    }
+
+    procedure sacar(inout c: ConjuntoArr<T>, in t: T): {
+        // peor caso: O(n^2)
+        var i: int 
+
+        i := 0
+        while(i < c.size)do         
+            if (pertenece(c,t)) do
+                sacarPorIndice(c,i)     // para reusar en intersecar y no recorrer while 
+            end if 
+            i := i + 1
+        end while 
+        return 
+    }
+    
+    procedure sacarPorIndice(inout c: ConjuntoArr<T>, in i: int): {
+        // O(1)
+        c.datos[i] := c.datos[c.size - 1]
+        c.size := c.size - 1
+        return
+    }
+}
