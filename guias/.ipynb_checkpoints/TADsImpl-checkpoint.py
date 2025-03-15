@@ -109,5 +109,4 @@ class SecuenciaLSE:
         self.longitud = 0
     
     def agregarAdelante(self, elem):
-        return NotImplemented
         
